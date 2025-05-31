@@ -65,19 +65,21 @@ for i in range(5):
     print("Recipes:")
     for r in recipes:
         print("-", r)
-    # if choice in recipes:
-    #     can_cook = True
-    #     for item in recipes[choice]:
-    #         if item not in pantry or pantry[item] < 1:
-    #             print("You don't have enough", item)
-    #             can_cook = False
-    #             break
-
-    #     if can_cook:
-    #         for item in recipes[choice]:
-    #             pantry[item] -= 1
-    #         print("Cooked", choice)
-    #     else:
-    #         print("Can't cook", choice)
-    # else:
-    #     print("Recipe not found.")
+    choice = input("Which recipe do you want to cook? (type 'exit' to stop): ")
+    if choice == 'exit':
+        break
+    if choice in recipes:
+        can_cook = True
+        for item in recipes[choice]:
+            if item not in pantry or pantry[item] < 1:
+                print("You don't have enough", item)
+                can_cook = False
+                break
+        if can_cook:
+            for item in recipes[choice]:
+                pantry[item] -= 1
+            print("Cooked", choice)
+        else:
+            print("Can't cook", choice)
+    else:
+        print("Recipe not found.")
