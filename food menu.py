@@ -61,25 +61,25 @@ recipes = {
         "spoon",
     ],
 }
-for i in range(5):
-    print("Recipes:")
-    for r in recipes:
-        print("-", r)
-    choice = input("Which recipe do you want to cook? (type 'exit' to stop): ")
-    if choice == 'exit':
-        break
-    if choice in recipes:
-        can_cook = True
-        for item in recipes[choice]:
-            if item not in pantry or pantry[item] < 1:
-                print("You don't have enough", item)
-                can_cook = False
-                break
-        if can_cook:
-            for item in recipes[choice]:
-                pantry[item] -= 1
-            print("Cooked", choice)
-        else:
-            print("Can't cook", choice)
+for _ in range(3):  # You can change 3 to how many times you want to allow cooking
+    print("\nAvailable Recipes:")
+    for i, recipe in enumerate(recipes.keys(), 1):
+        print(f"{i}. {recipe}")
+    choice = int(input("Enter the number of the recipe you want to cook: "))
+    selected_recipe = list(recipes.keys())[choice - 1]
+    ingredients = recipes[selected_recipe]
+    can_cook = True
+    for item in ingredients:
+        if pantry.get(item, 0) < 1:
+            print(f"Cannot cook {selected_recipe}. Missing or insufficient: {item}")
+            can_cook = False
+            break
+    if can_cook:
+        for item in ingredients:
+            pantry[item] -= 1
+        print(f"{selected_recipe} cooked! Pantry updated.")
     else:
-        print("Recipe not found.")
+        print(f"Skipped cooking {selected_recipe}.")
+    print("\nCurrent Pantry:")
+    for k, v in pantry.items():
+        print(f"{k}: {v}")
